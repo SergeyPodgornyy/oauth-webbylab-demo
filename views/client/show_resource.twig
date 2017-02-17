@@ -1,0 +1,28 @@
+{% extends "client/base.twig" %}
+
+{% block content %}
+    <img src="{{ app.request.basePath }}/images/deathstar.png" />
+    <h3>Resource Request Complete!</h3>
+    {% if response.plans is defined %}
+        <p>
+            You have successfully called the APIs with your Access Token.  Here are your plans:
+        </p>
+
+        <ul>
+            {% for plan in response.plans %}
+                <img src="{{ app.request.basePath }}{{ plan }}" class="plan" />
+            {% endfor %}
+        </ul>
+
+        <p>Here is the full JSON response: </p>
+
+        <pre>{{ response|json_stringify }}</pre>
+    {% else %}
+        <h4>Response:</h4>
+        {% include 'client/_error.twig' %}
+    {% endif %}
+
+    <pre><code>  The API call can be seen at <a href="{{ resource_uri }}" target="_blank">{{resource_uri}}</a></code></pre>
+
+    <a href="{{ path('homepage') }}" class="back">back</a>
+{% endblock %}
